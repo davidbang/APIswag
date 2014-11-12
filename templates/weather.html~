@@ -3,8 +3,8 @@
 APISWAG - {{title}}
 {% endblock title %}
 {% block header %}
-{{title}}
+APISWAG - {{location}}
 {% endblock header %}
 {% block body %}
-{{location}}
+
 {% endblock body %}
