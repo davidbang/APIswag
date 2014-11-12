@@ -9,3 +9,5 @@ Application URL:
 Callback Domain:
 http://www.APIswag.com
 www.apiswag.com
+
+Finished project over internet. All pushed through David's computer
