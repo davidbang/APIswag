@@ -1,7 +1,8 @@
-from flask import Flask,request,url_for,redirect,render_template
+from flask import Flask,request,url_for,redirect,render_template, flash
 import json, urllib2
 
 app=Flask(__name__)
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route("/")
 def index():
@@ -20,15 +21,44 @@ def t(loc= "newyork"):
     request = urllib2.urlopen(url)
     result = request.read()
     d = json.loads(result)
-    if (d['query']['results'] == "null"):
+    if (not d['query']['results']):
         flash ("Invalid Location")
         return redirect ("/")
+
     d1 = d['query']['results']['channel']
     loadstr= "hi"
     title =  d1['description']
-    location = d1['item']['title'] + " located at latitude:" + d1 ['item']['lat'] + " longitude:" + d1 ['item']['long']
+    locationt = d1['item']['title'] 
+    location = "Located at latitude: " + d1 ['item']['lat'] + " longitude: " + d1 ['item']['long']
     date = d1['item']['condition']['date']
-    return render_template ("weather.html", title = title, location = location, date = date)
+    units = d1 ['units']
+    temp = []
+    
+    temp.append('Current Temperature: ' +  d1['item'] ['condition']['temp'] + units ['temperature'])
+    temp.append('Current Condition: ' + d1 ['item']['condition'] ['text'])
+    
+    forecast = []
+    for r in d1['item'] ['forecast']:
+        forecast.append ([r ['day'] + " " +  r ['date'],  "High: " + r ['high'] + units['temperature'],  "Low: "  + r ['low'] + units ['temperature'], "Condition: " + r ['text']] )
+
+    sun = []
+    sun.append("Sunrise: " + d1 ['astronomy'] ['sunrise'])
+    sun.append("Sunset: " + d1 ['astronomy'] ['sunset'])
+    
+    wind= []
+    wind.append("Wind:")
+    wind.append("Wind Chill: " + d1 ['wind']['chill'] + units ['temperature'])
+    wind.append("Direction: " + d1['wind']['chill'])
+    wind.append("Speed:" + d1['wind']['speed'] + units ['speed'])
+    
+    tmp = d1 ['atmosphere']
+    atmosphere = []
+    atmosphere.append("Humidity: " + tmp ['humidity'] + " %")
+    atmosphere.append("Pressure: " + tmp['pressure'] + units ['pressure'])
+    atmosphere.append("Visibility: " + tmp ['visibility'] + units ['distance'])
+    
+    
+    return render_template ("weather.html", title = title, locationt = locationt,location = location, date = date, temp = temp, forecast = forecast, sun = sun, wind = wind, atmosphere = atmosphere)
             
     
 if __name__=="__main__":

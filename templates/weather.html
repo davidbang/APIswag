@@ -3,8 +3,53 @@
 APISWAG - {{title}}
 {% endblock title %}
 {% block header %}
-{{title}}
+<font size = "20">{{title}}</font>
 {% endblock header %}
 {% block body %}
-{{location}}
+<font size = "5">
+{{locationt}} <br>
+{{location}} <br>
+Today's Date is {{date}}
+<br><br>
+ {% for i in temp %}
+ {{i}} <br>
+{% endfor %}
+<br>
+Today's projected weather :<br> 
+ {% for i in forecast[0] %}
+ {{i}} <br>
+{% endfor %}
+
+<br>
+ {% for i in sun %}
+ {{i}} <br>
+{% endfor %}
+
+<br> 
+
+ {% for i in wind %}
+ {{i}} <br>
+{% endfor %}
+<br> 
+
+Atmosphere: <br>
+ {% for i in atmosphere %}
+ {{i}} <br>
+{% endfor %}
+
+</font>
+
+<font size = "5" color = "red">
+<br> <br>
+<h2> Future Forecast:<h2> <br>
+
+ {% for i in forecast %}
+ 
+{% for j in i %}
+ {{j}} <br>
+{% endfor %}
+<br>
+{% endfor %}
+</font>
+
 {% endblock body %}
