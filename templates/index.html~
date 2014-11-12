@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block header %}
+{{header}}
+{% endblock header %}
+
+{% block body %}
+<h3>Enter the Name of Any City</h3>
+<br>
+<form class="form_control">
+<input type="text" class="form-control" name="city" placeholder="New York">
+<br>
+<input type="submit" class="btn btn-success" name="submit" value="Submit">
+</form>
+{% endblock body %}
